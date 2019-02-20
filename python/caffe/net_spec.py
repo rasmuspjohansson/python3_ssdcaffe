@@ -71,6 +71,17 @@ def assign_proto(proto, name, val):
                 for k, v in six.iteritems(item):
                     assign_proto(proto_item, k, v)
         else:
+            print("val")	
+            print(val)	
+            print("proto")	
+            print(proto)	
+            print("name")	
+            print(name)	
+            if name in ["kernel_size","pad"]:
+                val=[int(a) for a in val]
+                print("changed")
+	
+
             getattr(proto, name).extend(val)
     elif isinstance(val, dict):
         for k, v in six.iteritems(val):

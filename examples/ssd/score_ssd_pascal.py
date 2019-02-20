@@ -237,7 +237,7 @@ model_name = "VGG_VOC0712_{}".format(job_name)
 # Directory which stores the model .prototxt file.
 save_dir = "models/VGGNet/VOC0712/{}_score".format(job_name)
 # Directory which stores the snapshot of trained models.
-snapshot_dir = "models/VGGNet/VOC0712/{}".format(job_name)
+snapshot_dir = "/root/data/ssdmodels/VGGNet/VOC0712/{}".format(job_name)
 # Directory which stores the job script and log file.
 job_dir = "jobs/VGGNet/VOC0712/{}_score".format(job_name)
 # Directory which stores the detection results.
@@ -321,7 +321,7 @@ max_ratio = 90
 step = int(math.floor((max_ratio - min_ratio) / (len(mbox_source_layers) - 2)))
 min_sizes = []
 max_sizes = []
-for ratio in xrange(min_ratio, max_ratio + 1, step):
+for ratio in range(min_ratio, max_ratio + 1, step):
   min_sizes.append(min_dim * ratio / 100.)
   max_sizes.append(min_dim * (ratio + step) / 100.)
 min_sizes = [min_dim * 10 / 100.] + min_sizes

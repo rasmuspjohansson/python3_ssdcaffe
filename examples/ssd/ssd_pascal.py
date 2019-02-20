@@ -237,9 +237,9 @@ job_name = "SSD_{}".format(resize)
 model_name = "VGG_VOC0712_{}".format(job_name)
 
 # Directory which stores the model .prototxt file.
-save_dir = "models/VGGNet/VOC0712/{}".format(job_name)
+save_dir = "/root/data/ssdmodels/VGGNet/VOC0712/{}".format(job_name)
 # Directory which stores the snapshot of models.
-snapshot_dir = "models/VGGNet/VOC0712/{}".format(job_name)
+snapshot_dir = "/root/data/ssdmodels/VGGNet/VOC0712/{}".format(job_name)
 # Directory which stores the job script and log file.
 job_dir = "jobs/VGGNet/VOC0712/{}".format(job_name)
 # Directory which stores the detection results.
@@ -258,7 +258,7 @@ job_file = "{}/{}.sh".format(job_dir, model_name)
 # Stores the test image names and sizes. Created by data/VOC0712/create_list.sh
 name_size_file = "data/VOC0712/test_name_size.txt"
 # The pretrained model. We use the Fully convolutional reduced (atrous) VGGNet.
-pretrain_model = "models/VGGNet/VGG_ILSVRC_16_layers_fc_reduced.caffemodel"
+pretrain_model = "/root/data/ssdmodels/VGGNet/VGG_ILSVRC_16_layers_fc_reduced.caffemodel"
 # Stores LabelMapItem.
 label_map_file = "data/VOC0712/labelmap_voc.prototxt"
 
@@ -310,7 +310,7 @@ max_ratio = 90
 step = int(math.floor((max_ratio - min_ratio) / (len(mbox_source_layers) - 2)))
 min_sizes = []
 max_sizes = []
-for ratio in xrange(min_ratio, max_ratio + 1, step):
+for ratio in range(min_ratio, max_ratio + 1, step):
   min_sizes.append(min_dim * ratio / 100.)
   max_sizes.append(min_dim * (ratio + step) / 100.)
 min_sizes = [min_dim * 10 / 100.] + min_sizes
@@ -329,12 +329,12 @@ clip = False
 
 # Solver parameters.
 # Defining which GPUs to use.
-gpus = "0,1,2,3"
+gpus = "0" #"0,1,2,3"
 gpulist = gpus.split(",")
 num_gpus = len(gpulist)
 
 # Divide the mini-batch to different GPUs.
-batch_size = 32
+batch_size = 16#32
 accum_batch_size = 32
 iter_size = accum_batch_size / batch_size
 solver_mode = P.Solver.CPU
@@ -363,7 +363,7 @@ test_batch_size = 8
 test_iter = int(math.ceil(float(num_test_image) / test_batch_size))
 
 solver_param = {
-    # Train parameters
+    # Train parameters  'snapshot': 80000,
     'base_lr': base_lr,
     'weight_decay': 0.0005,
     'lr_policy': "multistep",
@@ -372,7 +372,7 @@ solver_param = {
     'momentum': 0.9,
     'iter_size': iter_size,
     'max_iter': 120000,
-    'snapshot': 80000,
+    'snapshot': 8000,
     'display': 10,
     'average_loss': 10,
     'type': "SGD",
